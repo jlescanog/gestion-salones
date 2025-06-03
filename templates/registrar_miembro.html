@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar Nuevo Miembro</title>
+    </head>
+<body>
+    <h1>Registrar Nuevo Miembro</h1>
+    <form method="POST" action="{{ url_for('ruta_registrar_miembro') }}">
+        <p>
+            <label for="nombres">Nombres:</label><br>
+            <input type="text" id="nombres" name="nombres" required>
+        </p>
+        <p>
+            <label for="apellidos">Apellidos:</label><br>
+            <input type="text" id="apellidos" name="apellidos" required>
+        </p>
+        <p>
+            <label for="dni">DNI:</label><br>
+            <input type="text" id="dni" name="dni">
+        </p>
+        <p>
+            <label for="correo_electronico">Correo Electrónico:</label><br>
+            <input type="email" id="correo_electronico" name="correo_electronico">
+        </p>
+        <p>
+            <label for="numero_celular">Número de Celular:</label><br>
+            <input type="text" id="numero_celular" name="numero_celular">
+        </p>
+        <p>
+            <label for="fecha_nacimiento">Fecha de Nacimiento (YYYY-MM-DD):</label><br>
+            <input type="date" id="fecha_nacimiento" name="fecha_nacimiento">
+        </p>
+        <p>
+            <label for="direccion">Dirección:</label><br>
+            <input type="text" id="direccion" name="direccion">
+        </p>
+        <p>
+            <button type="submit">Registrar Miembro</button>
+        </p>
+    </form>
+    <p><a href="{{ url_for('hola_mundo') }}">Volver al inicio</a></p>
+</body>
+</html>
