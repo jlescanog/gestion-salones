@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Miembros</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista de Miembros Registrados</h1>
+
+    {% if miembros %}  <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombres</th>
+                    <th>Apellidos</th>
+                    <th>DNI</th>
+                    <th>Correo Electrónico</th>
+                    <th>Celular</th>
+                    <th>Fecha Nacimiento</th>
+                    <th>Dirección</th>
+                    <th>Fecha Registro</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for miembro in miembros %}  <tr>
+                    <td>{{ miembro.id }}</td>
+                    <td>{{ miembro.nombres }}</td>
+                    <td>{{ miembro.apellidos }}</td>
+                    <td>{{ miembro.dni if miembro.dni else '-' }}</td>
+                    <td>{{ miembro.correo_electronico if miembro.correo_electronico else '-' }}</td>
+                    <td>{{ miembro.numero_celular if miembro.numero_celular else '-' }}</td>
+                    <td>{{ miembro.fecha_nacimiento.strftime('%d-%m-%Y') if miembro.fecha_nacimiento else '-' }}</td>
+                    <td>{{ miembro.direccion if miembro.direccion else '-' }}</td>
+                    <td>{{ miembro.fecha_registro.strftime('%d-%m-%Y %H:%M:%S') if miembro.fecha_registro else '-' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No hay miembros registrados todavía.</p>
+    {% endif %}
+
+    <p><a href="{{ url_for('ruta_registrar_miembro') }}">Registrar Nuevo Miembro</a></p>
+    <p><a href="{{ url_for('hola_mundo') }}">Volver al inicio</a></p>
+</body>
+</html>

@@ -75,10 +75,20 @@ def ruta_registrar_miembro():
         db.session.commit()
 
         # Redirigir a alguna página (ej. la página de inicio o una de confirmación)
-        return redirect(url_for('hola_mundo'))
+        return redirect(url_for('ver_miembros'))
 
     # Si el método es GET, simplemente muestra el formulario
     return render_template('registrar_miembro.html')
+
+# NUEVA RUTA PARA VER TODOS LOS MIEMBROS
+@app.route('/miembros')
+def ver_miembros():
+    # Consultar todos los miembros de la base de datos
+    # El método .all() devuelve una lista de todos los objetos Miembro
+    todos_los_miembros = Miembro.query.all()
+    
+    # Renderizar una nueva plantilla HTML y pasarle la lista de miembros
+    return render_template('ver_miembros.html', miembros=todos_los_miembros)
 
 if __name__ == '__main__':
     app.run(debug=True)
