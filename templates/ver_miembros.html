@@ -47,7 +47,13 @@
                     <td>{{ miembro.fecha_nacimiento.strftime('%d-%m-%Y') if miembro.fecha_nacimiento else '-' }}</td>
                     <td>{{ miembro.direccion if miembro.direccion else '-' }}</td>
                     <td>{{ miembro.fecha_registro.strftime('%d-%m-%Y %H:%M:%S') if miembro.fecha_registro else '-' }}</td>
-                    <td><a href="{{ url_for('ruta_editar_miembro', miembro_id=miembro.id) }}">Editar</a></td>
+                    <td><a href="{{ url_for('ruta_editar_miembro', miembro_id=miembro.id) }}">Editar</a>
+
+                        <form method="POST" action="{{ url_for('ruta_eliminar_miembro', miembro_id=miembro.id) }}" style="display:inline;" onsubmit="return confirm('¿Estás seguro de que deseas eliminar a este miembro?');">
+                            <button type="submit" style="background:none; border:none; padding:0; color:red; cursor:pointer; text-decoration:underline;">Eliminar</button>
+                        </form>
+
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>

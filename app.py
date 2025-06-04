@@ -132,5 +132,23 @@ def ruta_editar_miembro(miembro_id):
     # Si el método es GET, simplemente muestra el formulario con los datos actuales del miembro
     return render_template('editar_miembro.html', miembro_a_editar=miembro_para_editar)
 
+# NUEVA RUTA PARA ELIMINAR UN MIEMBRO
+@app.route('/miembro/eliminar/<int:miembro_id>', methods=['POST']) # Solo aceptar POST
+def ruta_eliminar_miembro(miembro_id):
+    # Obtener el miembro de la base de datos por su ID
+    miembro_para_eliminar = Miembro.query.get_or_404(miembro_id)
+
+    try:
+        db.session.delete(miembro_para_eliminar)
+        db.session.commit()
+        # Podríamos añadir un mensaje flash de éxito aquí: "Miembro eliminado correctamente."
+    except Exception as e:
+        db.session.rollback()
+        # Podríamos añadir un mensaje flash de error aquí: "Error al eliminar el miembro."
+        # print(f"Error al eliminar: {e}") # Para depuración
+    
+    # Redirigir siempre a la lista de miembros
+    return redirect(url_for('ver_miembros'))
+
 if __name__ == '__main__':
     app.run(debug=True)
