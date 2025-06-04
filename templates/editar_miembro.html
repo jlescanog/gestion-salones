@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Miembro</title>
+</head>
+<body>
+    <h1>Editar Miembro: {{ miembro_a_editar.nombres }} {{ miembro_a_editar.apellidos }}</h1>
+    
+    <form method="POST" action="{{ url_for('ruta_editar_miembro', miembro_id=miembro_a_editar.id) }}">
+        <p>
+            <label for="nombres">Nombres:</label><br>
+            <input type="text" id="nombres" name="nombres" value="{{ miembro_a_editar.nombres }}" required>
+        </p>
+        <p>
+            <label for="apellidos">Apellidos:</label><br>
+            <input type="text" id="apellidos" name="apellidos" value="{{ miembro_a_editar.apellidos }}" required>
+        </p>
+        <p>
+            <label for="dni">DNI:</label><br>
+            <input type="text" id="dni" name="dni" value="{{ miembro_a_editar.dni if miembro_a_editar.dni }}">
+        </p>
+        <p>
+            <label for="correo_electronico">Correo Electrónico:</label><br>
+            <input type="email" id="correo_electronico" name="correo_electronico" value="{{ miembro_a_editar.correo_electronico if miembro_a_editar.correo_electronico }}">
+        </p>
+        <p>
+            <label for="numero_celular">Número de Celular:</label><br>
+            <input type="text" id="numero_celular" name="numero_celular" value="{{ miembro_a_editar.numero_celular if miembro_a_editar.numero_celular }}">
+        </p>
+        <p>
+            <label for="fecha_nacimiento">Fecha de Nacimiento (YYYY-MM-DD):</label><br>
+            <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" value="{{ miembro_a_editar.fecha_nacimiento.strftime('%Y-%m-%d') if miembro_a_editar.fecha_nacimiento }}">
+        </p>
+        <p>
+            <label for="direccion">Dirección:</label><br>
+            <input type="text" id="direccion" name="direccion" value="{{ miembro_a_editar.direccion if miembro_a_editar.direccion }}">
+        </p>
+        <p>
+            <button type="submit">Guardar Cambios</button>
+        </p>
+    </form>
+    <p><a href="{{ url_for('ver_miembros') }}">Cancelar y Volver a la Lista</a></p>
+</body>
+</html>

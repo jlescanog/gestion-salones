@@ -90,5 +90,47 @@ def ver_miembros():
     # Renderizar una nueva plantilla HTML y pasarle la lista de miembros
     return render_template('ver_miembros.html', miembros=todos_los_miembros)
 
+# NUEVA RUTA PARA EDITAR UN MIEMBRO
+@app.route('/miembro/editar/<int:miembro_id>', methods=['GET', 'POST'])
+def ruta_editar_miembro(miembro_id):
+    # Obtener el miembro de la base de datos por su ID
+    # .first_or_404() es útil: obtiene el primero o devuelve un error 404 si no se encuentra
+    miembro_para_editar = Miembro.query.get_or_404(miembro_id)
+
+    if request.method == 'POST':
+        # Actualizar los campos del miembro con los datos del formulario
+        miembro_para_editar.nombres = request.form['nombres']
+        miembro_para_editar.apellidos = request.form['apellidos']
+        miembro_para_editar.dni = request.form['dni']
+        miembro_para_editar.correo_electronico = request.form['correo_electronico']
+        miembro_para_editar.numero_celular = request.form['numero_celular']
+        
+        fecha_nac_str = request.form['fecha_nacimiento']
+        if fecha_nac_str:
+            try:
+                miembro_para_editar.fecha_nacimiento = datetime.datetime.strptime(fecha_nac_str, '%Y-%m-%d').date()
+            except ValueError:
+                miembro_para_editar.fecha_nacimiento = None # o manejar error
+        else:
+            miembro_para_editar.fecha_nacimiento = None
+            
+        miembro_para_editar.direccion = request.form['direccion']
+
+        # Confirmar los cambios en la base de datos
+        try:
+            db.session.commit()
+            # Podríamos añadir un mensaje flash de éxito aquí
+            return redirect(url_for('ver_miembros'))
+        except Exception as e:
+            db.session.rollback() # Revertir cambios si hay un error
+            # Podríamos añadir un mensaje flash de error aquí y mostrar el formulario de nuevo
+            # print(f"Error al actualizar: {e}") # Para depuración
+            # Por ahora, solo redirigimos o mostramos el form de nuevo
+            return render_template('editar_miembro.html', miembro_a_editar=miembro_para_editar, error="Error al guardar cambios.")
+
+
+    # Si el método es GET, simplemente muestra el formulario con los datos actuales del miembro
+    return render_template('editar_miembro.html', miembro_a_editar=miembro_para_editar)
+
 if __name__ == '__main__':
     app.run(debug=True)

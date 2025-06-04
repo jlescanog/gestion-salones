@@ -33,6 +33,7 @@
                     <th>Fecha Nacimiento</th>
                     <th>Dirección</th>
                     <th>Fecha Registro</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -46,6 +47,7 @@
                     <td>{{ miembro.fecha_nacimiento.strftime('%d-%m-%Y') if miembro.fecha_nacimiento else '-' }}</td>
                     <td>{{ miembro.direccion if miembro.direccion else '-' }}</td>
                     <td>{{ miembro.fecha_registro.strftime('%d-%m-%Y %H:%M:%S') if miembro.fecha_registro else '-' }}</td>
+                    <td><a href="{{ url_for('ruta_editar_miembro', miembro_id=miembro.id) }}">Editar</a></td>
                 </tr>
                 {% endfor %}
             </tbody>
