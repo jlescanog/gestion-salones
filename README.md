@@ -39,13 +39,11 @@ Sigue estos pasos para configurar el proyecto en tu entorno local:
 1.  **Clonar el Repositorio:**
     Abre tu terminal y clona el repositorio del proyecto desde GitHub:
     ```bash
-    git clone [URL_DEL_REPOSITORIO_GITHUB_AQUÍ]
+    git clone (https://github.com/jlescanog/gestion-salones.git)
     ```
-    (Reemplaza `[URL_DEL_REPOSITORIO_GITHUB_AQUÍ]` con la URL real de tu repositorio)
-
 2.  **Navegar al Directorio del Proyecto:**
     ```bash
-    cd nombre-del-directorio-del-proyecto
+    cd gestion-salones
     ```
     (Ej. `cd gestion-salones`)
 
