@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 import os
 import datetime
@@ -7,6 +7,7 @@ import datetime
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'clave-secreta'
 
 # Configuración de la base de datos
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'gestion_congregacion.db')
@@ -73,8 +74,7 @@ def ruta_registrar_miembro():
         db.session.add(nuevo_miembro)
         # Confirmar los cambios en la base de datos
         db.session.commit()
-
-        # Redirigir a alguna página (ej. la página de inicio o una de confirmación)
+        flash('¡Miembro registrado exitosamente!', 'success')
         return redirect(url_for('ver_miembros'))
 
     # Si el método es GET, simplemente muestra el formulario
@@ -119,7 +119,7 @@ def ruta_editar_miembro(miembro_id):
         # Confirmar los cambios en la base de datos
         try:
             db.session.commit()
-            # Podríamos añadir un mensaje flash de éxito aquí
+            flash('¡Cambios guardados correctamente!', 'success')
             return redirect(url_for('ver_miembros'))
         except Exception as e:
             db.session.rollback() # Revertir cambios si hay un error
@@ -141,6 +141,7 @@ def ruta_eliminar_miembro(miembro_id):
     try:
         db.session.delete(miembro_para_eliminar)
         db.session.commit()
+        flash('Miembro eliminado.', 'info')
         # Podríamos añadir un mensaje flash de éxito aquí: "Miembro eliminado correctamente."
     except Exception as e:
         db.session.rollback()

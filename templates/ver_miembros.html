@@ -19,6 +19,16 @@
     </style>
 </head>
 <body>
+        
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div style="padding: 15px; margin-bottom: 20px; border: 1px solid transparent; border-radius: 4px; color: #3c763d; background-color: #dff0d8; border-color: #d6e9c6;">
+                    <strong>{{ category.capitalize() if category != 'message' else 'Mensaje' }}:</strong> {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
     <h1>Lista de Miembros Registrados</h1>
 
     {% if miembros %}  <table>
